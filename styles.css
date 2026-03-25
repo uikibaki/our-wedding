@@ -44,6 +44,11 @@
   height: 50px;
   font-size: 20px;
   cursor: pointer;
+
+   
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ─── CSS Variables ─── */
