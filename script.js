@@ -660,11 +660,11 @@ function initPhotoModal() {
   }, { passive: false });
 });
   
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal || e.target.id === 'modalContainer') {
-      closePhotoModal();
-    }
-  });
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closePhotoModal();
+  }
+});
 
   document.addEventListener('keydown', (e) => {
     if (!modal.classList.contains('is-open')) return;
