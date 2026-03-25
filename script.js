@@ -944,7 +944,7 @@ const icon = document.getElementById("musicIcon");
 btn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
-    icon.src = "icon/sound-on.svg";
+    icon.src = "icon/sound-high.svg";
   } else {
     audio.pause();
     icon.src = "icon/sound-off.svg";
