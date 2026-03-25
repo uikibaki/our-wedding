@@ -22,7 +22,7 @@ const CONFIG = {
     nameEn: "Groom",
     father: "송재섭",
     mother: "김근순",
-    fatherDeceased: false,
+    fatherDeceased: True,
     motherDeceased: false
   },
 
