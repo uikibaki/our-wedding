@@ -634,6 +634,15 @@ function initPhotoModal() {
   const container = $('#modalContainer');
   const img = $('#modalImg');
 
+
+
+['gesturestart', 'gesturechange', 'gestureend'].forEach((eventName) => {
+  container.addEventListener(eventName, (e) => {
+    if (!modal.classList.contains('is-open')) return;
+    e.preventDefault();
+  }, { passive: false });
+});
+  
   modal.addEventListener('click', (e) => {
     if (e.target === modal || e.target.id === 'modalContainer') {
       closePhotoModal();
