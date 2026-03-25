@@ -669,55 +669,70 @@ function initPhotoModal() {
   }, { passive: false });
 
   /* 모바일 터치 시작 */
-  container.addEventListener('touchstart', (e) => {
-    if (!modal.classList.contains('is-open')) return;
+container.addEventListener('touchstart', (e) => {
+  if (!modal.classList.contains('is-open')) return;
 
-    if (e.touches.length === 1) {
-      touchStartX = e.touches[0].screenX;
-      touchStartY = e.touches[0].screenY;
+  if (e.touches.length >= 2 || scale > 1) {
+    e.preventDefault();
+  }
 
-      if (scale > 1) {
-        isDragging = true;
-        dragStartX = e.touches[0].clientX - translateX;
-        dragStartY = e.touches[0].clientY - translateY;
-        img.classList.add('dragging');
-      }
+  if (e.touches.length === 1) {
+    touchStartX = e.touches[0].screenX;
+    touchStartY = e.touches[0].screenY;
+
+    if (scale > 1) {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX - translateX;
+      dragStartY = e.touches[0].clientY - translateY;
+      img.classList.add('dragging');
     }
+  }
 
-    if (e.touches.length === 2) {
-      isDragging = false;
-      img.classList.remove('dragging');
+  if (e.touches.length === 2) {
+    isDragging = false;
+    img.classList.remove('dragging');
 
-      initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
-      initialScale = scale;
-    }
-  }, { passive: true });
+    initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
+    initialScale = scale;
+  }
+}, { passive: false });
 
   /* 모바일 터치 이동 */
-  container.addEventListener('touchmove', (e) => {
-    if (!modal.classList.contains('is-open')) return;
+container.addEventListener('touchmove', (e) => {
+  if (!modal.classList.contains('is-open')) return;
 
-    if (e.touches.length === 2) {
-      const currentDistance = getDistance(e.touches[0], e.touches[1]);
+  if (e.touches.length >= 2 || (e.touches.length === 1 && scale > 1)) {
+    e.preventDefault();
+  }
 
-      if (initialPinchDistance > 0) {
-        scale = initialScale * (currentDistance / initialPinchDistance);
-        scale = Math.min(Math.max(1, scale), 4);
-        updateZoom();
-      }
-      return;
-    }
+  if (e.touches.length === 2) {
+    const currentDistance = getDistance(e.touches[0], e.touches[1]);
 
-    if (e.touches.length === 1 && isDragging && scale > 1) {
-      translateX = e.touches[0].clientX - dragStartX;
-      translateY = e.touches[0].clientY - dragStartY;
+    if (initialPinchDistance > 0) {
+      scale = initialScale * (currentDistance / initialPinchDistance);
+      scale = Math.min(Math.max(1, scale), 4);
       updateZoom();
     }
-  }, { passive: true });
+    return;
+  }
+
+  if (e.touches.length === 1 && isDragging && scale > 1) {
+    translateX = e.touches[0].clientX - dragStartX;
+    translateY = e.touches[0].clientY - dragStartY;
+    updateZoom();
+  }
+}, { passive: false });
+
   
 /* 모바일 터치 끝 */
+
+  
 container.addEventListener('touchend', (e) => {
   if (!modal.classList.contains('is-open')) return;
+
+  if (scale > 1 || e.changedTouches.length >= 1) {
+    e.preventDefault();
+  }
 
   img.classList.remove('dragging');
 
@@ -734,13 +749,11 @@ container.addEventListener('touchend', (e) => {
     swiped = handleSwipe();
   }
 
-  /* 스와이프가 일어났으면 더블탭 확대 로직 실행하지 않음 */
   if (swiped) {
     lastTap = 0;
     return;
   }
 
-  /* 더블탭 확대 */
   const now = Date.now();
   if (now - lastTap < 300 && e.changedTouches.length === 1) {
     if (scale === 1) {
@@ -754,7 +767,10 @@ container.addEventListener('touchend', (e) => {
   }
 
   lastTap = now;
-}, { passive: true });
+}, { passive: false });
+
+
+  
   /* 마우스 드래그 */
   container.addEventListener('mousedown', (e) => {
     if (!modal.classList.contains('is-open')) return;
