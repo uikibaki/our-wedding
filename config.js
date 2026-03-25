@@ -38,7 +38,7 @@ const CONFIG = {
   wedding: {
     date: "2026-06-13",
     time: "14:00",
-    venue: "동서울 웨딩홀",
+    venue: "동서울 웨딩 컨벤션",
     address: "경기도 성남시 수정구 복정로76",
     tel: "031-721-6700",
     mapLinks: {
