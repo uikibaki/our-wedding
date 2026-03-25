@@ -609,19 +609,21 @@ function getDistance(touch1, touch2) {
 }
 
 function handleSwipe() {
-  if (scale > 1) return; // 확대 중일 땐 swipe 넘김 막기
+  if (scale > 1) return false; // 확대 중일 땐 swipe 넘김 막기
 
   const diffX = touchStartX - touchEndX;
   const diffY = touchStartY - touchEndY;
   const minSwipe = 50;
 
-  if (Math.abs(diffX) < minSwipe || Math.abs(diffX) < Math.abs(diffY)) return;
+  if (Math.abs(diffX) < minSwipe || Math.abs(diffX) < Math.abs(diffY)) return false;
 
   if (diffX > 0) {
     modalNavigate(1);  // swipe left -> next
   } else {
     modalNavigate(-1); // swipe right -> prev
   }
+
+  return true;
 }
 
 function initPhotoModal() {
@@ -712,39 +714,47 @@ function initPhotoModal() {
       updateZoom();
     }
   }, { passive: true });
+  
+/* 모바일 터치 끝 */
+container.addEventListener('touchend', (e) => {
+  if (!modal.classList.contains('is-open')) return;
 
-  /* 모바일 터치 끝 */
-  container.addEventListener('touchend', (e) => {
-    if (!modal.classList.contains('is-open')) return;
+  img.classList.remove('dragging');
 
-    img.classList.remove('dragging');
+  if (e.touches.length === 0) {
+    isDragging = false;
+    initialPinchDistance = 0;
+  }
 
-    if (e.touches.length === 0) {
-      isDragging = false;
-      initialPinchDistance = 0;
+  let swiped = false;
+
+  if (scale === 1 && e.changedTouches.length === 1) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    swiped = handleSwipe();
+  }
+
+  /* 스와이프가 일어났으면 더블탭 확대 로직 실행하지 않음 */
+  if (swiped) {
+    lastTap = 0;
+    return;
+  }
+
+  /* 더블탭 확대 */
+  const now = Date.now();
+  if (now - lastTap < 300 && e.changedTouches.length === 1) {
+    if (scale === 1) {
+      scale = 2;
+    } else {
+      resetZoom();
+      lastTap = 0;
+      return;
     }
+    updateZoom();
+  }
 
-    if (scale === 1 && e.changedTouches.length === 1) {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    }
-
-    /* 더블탭 확대 */
-    const now = Date.now();
-    if (now - lastTap < 300 && e.changedTouches.length === 1) {
-      if (scale === 1) {
-        scale = 2;
-      } else {
-        resetZoom();
-        lastTap = 0;
-        return;
-      }
-      updateZoom();
-    }
-    lastTap = now;
-  }, { passive: true });
-
+  lastTap = now;
+}, { passive: true });
   /* 마우스 드래그 */
   container.addEventListener('mousedown', (e) => {
     if (!modal.classList.contains('is-open')) return;
