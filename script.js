@@ -543,7 +543,6 @@ function openPhotoModal(images, index) {
   modalImages = images;
   modalIndex = index;
   showModalImage();
-  resetZoom();
 
   $('#photoModal').classList.add('is-open');
   document.body.classList.add('no-scroll');
