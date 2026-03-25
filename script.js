@@ -768,11 +768,12 @@ container.addEventListener('touchend', (e) => {
 
   
 
-  container.addEventListener('touchcancel', () => {
-    isDragging = false;
-    initialPinchDistance = 0;
-    img.classList.remove('dragging');
-  }, { passive: false });
+container.addEventListener('touchcancel', () => {
+  isDragging = false;
+  initialPinchDistance = 0;
+  initialScale = scale;
+  img.classList.remove('dragging');
+}, { passive: false });
 
   container.addEventListener('mousedown', (e) => {
     if (!modal.classList.contains('is-open')) return;
