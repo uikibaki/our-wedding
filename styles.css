@@ -389,7 +389,7 @@ touch-action: none;
   max-width: 100%;
   max-height: none;
   will-change: transform;
-  transform-origin: center center;
+  transform-origin: 0 0;
 }
 
 .photo-modal__counter {
