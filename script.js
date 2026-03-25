@@ -563,25 +563,12 @@ function openPhotoModal(images, index) {
 
   $('#photoModal').classList.add('is-open');
   document.body.classList.add('no-scroll');
-
-  document.addEventListener('touchmove', preventNativeZoom, { passive: false });
-  document.addEventListener('gesturestart', preventNativeGesture, { passive: false });
-  document.addEventListener('gesturechange', preventNativeGesture, { passive: false });
-  document.addEventListener('gestureend', preventNativeGesture, { passive: false });
 }
 
-function openPhotoModal(images, index) {
-  modalImages = images;
-  modalIndex = index;
-  showModalImage();
-
-  $('#photoModal').classList.add('is-open');
-  document.body.classList.add('no-scroll');
-
-  document.addEventListener('touchmove', preventNativeZoom, { passive: false });
-  document.addEventListener('gesturestart', preventNativeGesture, { passive: false });
-  document.addEventListener('gesturechange', preventNativeGesture, { passive: false });
-  document.addEventListener('gestureend', preventNativeGesture, { passive: false });
+function closePhotoModal() {
+  $('#photoModal').classList.remove('is-open');
+  document.body.classList.remove('no-scroll');
+  resetZoom();
 }
 
 function showModalImage() {
