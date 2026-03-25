@@ -382,7 +382,7 @@ a {
 }
 
 .photo-modal__img {
-  transform-origin: center center;
+  transform-origin: 0 0;
   will-change: transform;
 }
 
