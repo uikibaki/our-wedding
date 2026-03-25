@@ -820,20 +820,24 @@ modal.addEventListener('touchend', (e) => {
   }
 
   const now = Date.now();
-  if (now - lastTap < 300 && e.changedTouches.length === 1) {
-    if (scale === 1) {
-      scale = 2;
-    } else {
-      resetZoom();
-      lastTap = 0;
-      return;
-    }
-    updateZoom();
-  }
 
+if (now - modalOpenedAt < 400) {
   lastTap = now;
-}, { passive: false });
+  return;
+}
 
+if (now - lastTap < 300 && e.changedTouches.length === 1) {
+  if (scale === 1) {
+    scale = 2;
+  } else {
+    resetZoom();
+    lastTap = 0;
+    return;
+  }
+  updateZoom();
+}
+
+lastTap = now;
 
   
 
