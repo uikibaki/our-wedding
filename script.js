@@ -748,21 +748,6 @@ function initPhotoModal() {
       return;
     }
 
-    // 더블탭 확대
-    const now = Date.now();
-    if (now - lastTap < 300 && e.changedTouches.length === 1) {
-      if (scale === 1) {
-        scale = 2;
-      } else {
-        resetZoom();
-        lastTap = 0;
-        return;
-      }
-      updateZoom();
-    }
-
-    lastTap = now;
-  }, { passive: false });
 
   /* ───────── 터치 취소 (중요!!) ───────── */
   container.addEventListener('touchcancel', () => {
