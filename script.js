@@ -641,29 +641,19 @@ function initPhotoModal() {
     }
   });
 
-  /* Keyboard navigation */
-  /* ───────── 키보드 ───────── */
   document.addEventListener('keydown', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
     if (e.key === 'Escape') closePhotoModal();
-
-    if (scale > 1) return; // 확대 중엔 좌우키 넘김 막기
     if (scale > 1) return;
-
     if (e.key === 'ArrowLeft') modalNavigate(-1);
     if (e.key === 'ArrowRight') modalNavigate(1);
   });
 
-  /* 마우스 휠 확대 */
-  /* ───────── 마우스 휠 확대 ───────── */
   container.addEventListener('wheel', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
     e.preventDefault();
-
-    const zoomAmount = 0.15;
-    const delta = e.deltaY < 0 ? zoomAmount : -zoomAmount;
 
     const delta = e.deltaY < 0 ? 0.2 : -0.2;
     scale += delta;
@@ -672,43 +662,17 @@ function initPhotoModal() {
     updateZoom();
   }, { passive: false });
 
-  /* 모바일 터치 시작 */
-container.addEventListener('touchstart', (e) => {
-  if (!modal.classList.contains('is-open')) return;
-
-  if (e.touches.length >= 2 || scale > 1) {
-    e.preventDefault();
-  }
-
-  if (e.touches.length === 1) {
-    touchStartX = e.touches[0].screenX;
-    touchStartY = e.touches[0].screenY;
-  /* ───────── 터치 시작 ───────── */
   container.addEventListener('touchstart', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
-    if (scale > 1) {
-      isDragging = true;
-      dragStartX = e.touches[0].clientX - translateX;
-      dragStartY = e.touches[0].clientY - translateY;
-      img.classList.add('dragging');
     if (e.touches.length >= 2 || scale > 1) {
       e.preventDefault();
     }
-  }
 
-  if (e.touches.length === 2) {
-    isDragging = false;
-    img.classList.remove('dragging');
-    // 한 손가락 → swipe or drag
     if (e.touches.length === 1) {
       touchStartX = e.touches[0].screenX;
       touchStartY = e.touches[0].screenY;
 
-    initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
-    initialScale = scale;
-  }
-}, { passive: false });
       if (scale > 1) {
         isDragging = true;
         dragStartX = e.touches[0].clientX - translateX;
@@ -717,54 +681,24 @@ container.addEventListener('touchstart', (e) => {
       }
     }
 
-  /* 모바일 터치 이동 */
-container.addEventListener('touchmove', (e) => {
-  if (!modal.classList.contains('is-open')) return;
-    // 두 손가락 → pinch zoom
     if (e.touches.length === 2) {
       isDragging = false;
       img.classList.remove('dragging');
-
-  if (e.touches.length >= 2 || (e.touches.length === 1 && scale > 1)) {
-    e.preventDefault();
-  }
       initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
       initialScale = scale;
     }
   }, { passive: false });
 
-  if (e.touches.length === 2) {
-    const currentDistance = getDistance(e.touches[0], e.touches[1]);
-  /* ───────── 터치 이동 ───────── */
   container.addEventListener('touchmove', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
-    if (initialPinchDistance > 0) {
-      scale = initialScale * (currentDistance / initialPinchDistance);
-      scale = Math.min(Math.max(1, scale), 4);
-      updateZoom();
-    if (e.touches.length >= 2 || (scale > 1)) {
+    if (e.touches.length >= 2 || scale > 1) {
       e.preventDefault();
     }
-    return;
-  }
 
-  if (e.touches.length === 1 && isDragging && scale > 1) {
-    translateX = e.touches[0].clientX - dragStartX;
-    translateY = e.touches[0].clientY - dragStartY;
-    updateZoom();
-  }
-}, { passive: false });
-
-  
-/* 모바일 터치 끝 */
-    // pinch zoom
     if (e.touches.length === 2) {
       const currentDistance = getDistance(e.touches[0], e.touches[1]);
 
-  
-container.addEventListener('touchend', (e) => {
-  if (!modal.classList.contains('is-open')) return;
       if (initialPinchDistance > 0) {
         scale = initialScale * (currentDistance / initialPinchDistance);
         scale = Math.min(Math.max(1, scale), 4);
@@ -773,10 +707,6 @@ container.addEventListener('touchend', (e) => {
       return;
     }
 
-  if (scale > 1 || e.changedTouches.length >= 1) {
-    e.preventDefault();
-  }
-    // drag 이동
     if (e.touches.length === 1 && isDragging && scale > 1) {
       translateX = e.touches[0].clientX - dragStartX;
       translateY = e.touches[0].clientY - dragStartY;
@@ -784,56 +714,29 @@ container.addEventListener('touchend', (e) => {
     }
   }, { passive: false });
 
-  img.classList.remove('dragging');
-  /* ───────── 터치 끝 ───────── */
   container.addEventListener('touchend', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
-  if (e.touches.length === 0) {
-    isDragging = false;
-    initialPinchDistance = 0;
-  }
     img.classList.remove('dragging');
 
-  let swiped = false;
     if (e.touches.length === 0) {
       isDragging = false;
       initialPinchDistance = 0;
     }
 
-  if (scale === 1 && e.changedTouches.length === 1) {
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-    swiped = handleSwipe();
-  }
     let swiped = false;
 
-  if (swiped) {
-    lastTap = 0;
-    return;
-  }
     if (scale === 1 && e.changedTouches.length === 1) {
       touchEndX = e.changedTouches[0].screenX;
       touchEndY = e.changedTouches[0].screenY;
       swiped = handleSwipe();
     }
 
-  const now = Date.now();
-  if (now - lastTap < 300 && e.changedTouches.length === 1) {
-    if (scale === 1) {
-      scale = 2;
-    } else {
-      resetZoom();
     if (swiped) {
       lastTap = 0;
       return;
     }
-    updateZoom();
-  }
 
-  lastTap = now;
-}, { passive: false });
-    // 더블탭 확대
     const now = Date.now();
     if (now - lastTap < 300 && e.changedTouches.length === 1) {
       if (scale === 1) {
@@ -849,16 +752,12 @@ container.addEventListener('touchend', (e) => {
     lastTap = now;
   }, { passive: false });
 
-  
-  /* 마우스 드래그 */
-  /* ───────── 터치 취소 (중요!!) ───────── */
   container.addEventListener('touchcancel', () => {
     isDragging = false;
     initialPinchDistance = 0;
     img.classList.remove('dragging');
   }, { passive: false });
 
-  /* ───────── 마우스 드래그 ───────── */
   container.addEventListener('mousedown', (e) => {
     if (!modal.classList.contains('is-open')) return;
     if (scale <= 1) return;
@@ -882,8 +781,6 @@ container.addEventListener('touchend', (e) => {
     img.classList.remove('dragging');
   });
 
-  /* 더블클릭 확대 (PC용) */
-  /* ───────── 더블클릭 확대 ───────── */
   container.addEventListener('dblclick', () => {
     if (scale === 1) {
       scale = 2;
@@ -891,9 +788,10 @@ container.addEventListener('touchend', (e) => {
     } else {
       resetZoom();
     }
-    updateZoom();
   });
 }
+
+  
 
   /* ═══════════════════════════════════════════
      Location Section
