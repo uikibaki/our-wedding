@@ -556,12 +556,9 @@ let initialScale = 1;
 /* double tap */
 let lastTap = 0;
 let scrollY = 0;
-let modalOpenedAt = 0;
 
 function openPhotoModal(images, index) {
   scrollY = window.scrollY;
-  lastTap = 0;
-  modalOpenedAt = Date.now();
 
   modalImages = images;
   modalIndex = index;
@@ -573,7 +570,6 @@ function openPhotoModal(images, index) {
 }
 
 function closePhotoModal() {
-  lastTap = 0;
   $('#photoModal').classList.remove('is-open');
   document.body.classList.remove('no-scroll');
   document.body.style.top = '';
