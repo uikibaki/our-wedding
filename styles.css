@@ -337,6 +337,15 @@ a {
   opacity: 1;
 }
 
+.photo-modal__img.is-zoomed {
+  cursor: grab;
+}
+
+.photo-modal__img.dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
 .photo-modal__nav {
   position: absolute;
   top: 50%;
