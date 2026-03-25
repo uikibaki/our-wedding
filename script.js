@@ -745,6 +745,19 @@
      Init
      ═══════════════════════════════════════════ */
 
+const toggle = document.getElementById('bgmToggle');
+const bgm = document.getElementById('bgm');
+
+toggle.addEventListener('click', () => {
+  if (bgm.paused) {
+    bgm.play();
+    toggle.textContent = "🔊";
+  } else {
+    bgm.pause();
+    toggle.textContent = "🔇";
+  }
+});
+  
   async function init() {
     setMetaTags();
     initCurtain();
