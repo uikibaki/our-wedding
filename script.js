@@ -654,7 +654,7 @@ function initPhotoModal() {
 
 
 ['gesturestart', 'gesturechange', 'gestureend'].forEach((eventName) => {
-  container.addEventListener(eventName, (e) => {
+  modal.addEventListener(eventName, (e) => {
     if (!modal.classList.contains('is-open')) return;
     e.preventDefault();
   }, { passive: false });
