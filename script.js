@@ -3,6 +3,23 @@
  * Korean Mobile 청첩장 - Script
  */
 
+
+function preventNativeZoom(e) {
+  const modal = $('#photoModal');
+  if (!modal || !modal.classList.contains('is-open')) return;
+
+  // 두 손가락 제스처거나, 이미 확대 상태면 기본 브라우저 동작 막기
+  if ((e.touches && e.touches.length > 1) || scale > 1) {
+    e.preventDefault();
+  }
+}
+
+function preventNativeGesture(e) {
+  const modal = $('#photoModal');
+  if (!modal || !modal.classList.contains('is-open')) return;
+  e.preventDefault();
+}
+
 (function () {
   'use strict';
 
