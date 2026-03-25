@@ -738,7 +738,7 @@ if (e.touches.length === 2) {
     const midY = (touch1.clientY + touch2.clientY) / 2;
 
     // 컨테이너 기준 좌표로 변환
-const rect = img.getBoundingClientRect();
+const rect = container.getBoundingClientRect();
 const pointX = midX - rect.left;
 const pointY = midY - rect.top;
 
