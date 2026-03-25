@@ -33,7 +33,7 @@
   }
 
   /* ═══════════════════════════════════════════
-     Image Auto-Detection
+     추가한 내용 
      ═══════════════════════════════════════════ */
 
 const photoModal = document.getElementById("photoModal");
@@ -86,7 +86,69 @@ function getDistance(p1, p2) {
   const dy = p2.clientY - p1.clientY;
   return Math.sqrt(dx * dx + dy * dy);
 }
+modalContainer.addEventListener("pointerdown", (e) => {
+  pointers.set(e.pointerId, e);
 
+  if (pointers.size === 1 && scale > 1) {
+    isDragging = true;
+    startX = e.clientX - translateX;
+    startY = e.clientY - translateY;
+    modalImg.classList.add("dragging");
+  }
+
+  if (pointers.size === 2) {
+    const pts = Array.from(pointers.values());
+    initialPinchDistance = getDistance(pts[0], pts[1]);
+    initialScale = scale;
+    isDragging = false;
+    modalImg.classList.remove("dragging");
+  }
+});
+
+modalContainer.addEventListener("pointermove", (e) => {
+  if (!pointers.has(e.pointerId)) return;
+  pointers.set(e.pointerId, e);
+
+  if (pointers.size === 2) {
+    const pts = Array.from(pointers.values());
+    const currentDistance = getDistance(pts[0], pts[1]);
+
+    if (initialPinchDistance > 0) {
+      scale = Math.min(Math.max(1, initialScale * (currentDistance / initialPinchDistance)), 4);
+      updateZoom();
+    }
+    return;
+  }
+
+  if (isDragging && pointers.size === 1 && scale > 1) {
+    translateX = e.clientX - startX;
+    translateY = e.clientY - startY;
+    updateZoom();
+  }
+});
+
+function endPointer(e) {
+  pointers.delete(e.pointerId);
+
+  if (pointers.size < 2) {
+    initialPinchDistance = 0;
+  }
+
+  if (pointers.size === 0) {
+    isDragging = false;
+    modalImg.classList.remove("dragging");
+  }
+}
+
+modalContainer.addEventListener("pointerup", endPointer);
+modalContainer.addEventListener("pointercancel", endPointer);
+modalContainer.addEventListener("pointerleave", endPointer);
+
+  
+  
+  /* ═══════════════════════════════════════════
+     Utility Helpers
+     ═══════════════════════════════════════════ */
   
   function loadImagesFromFolder(folder, maxAttempts = 50) {
     return new Promise(resolve => {
