@@ -939,14 +939,15 @@ container.addEventListener('touchend', (e) => {
 
 const audio = document.getElementById("bgm");
 const btn = document.getElementById("musicBtn");
+const icon = document.getElementById("musicIcon");
 
 btn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
-    btn.innerText = "🔊";
+    icon.src = "icon/sound-on.svg";
   } else {
     audio.pause();
-    btn.innerText = "🔇";
+    icon.src = "icon/sound-off.svg";
   }
 });
   
