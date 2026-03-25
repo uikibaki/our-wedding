@@ -713,43 +713,60 @@ function initPhotoModal() {
     }
   }, { passive: false });
 
-  container.addEventListener('touchend', (e) => {
-    if (!modal.classList.contains('is-open')) return;
 
-    img.classList.remove('dragging');
 
-    if (e.touches.length === 0) {
-      isDragging = false;
-      initialPinchDistance = 0;
-    }
+container.addEventListener('touchend', (e) => {
+  if (!modal.classList.contains('is-open')) return;
 
-    let swiped = false;
+  img.classList.remove('dragging');
 
-    if (scale === 1 && e.changedTouches.length === 1) {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      swiped = handleSwipe();
-    }
+  if (e.touches.length === 0) {
+    isDragging = false;
+  }
 
-    if (swiped) {
+  // 한 손가락이 남아 있으면 현재 확대 상태 유지한 채 드래그 계속 가능하게
+  if (e.touches.length === 1 && scale > 1) {
+    dragStartX = e.touches[0].clientX - translateX;
+    dragStartY = e.touches[0].clientY - translateY;
+  }
+
+  // 핀치 종료 후에도 현재 scale 유지
+  if (e.touches.length < 2) {
+    initialPinchDistance = 0;
+    initialScale = scale;
+  }
+
+  let swiped = false;
+
+  // 확대 안 된 상태에서만 스와이프 넘김
+  if (scale === 1 && e.changedTouches.length === 1) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    swiped = handleSwipe();
+  }
+
+  if (swiped) {
+    lastTap = 0;
+    return;
+  }
+
+  const now = Date.now();
+  if (now - lastTap < 300 && e.changedTouches.length === 1) {
+    if (scale === 1) {
+      scale = 2;
+    } else {
+      resetZoom();
       lastTap = 0;
       return;
     }
+    updateZoom();
+  }
 
-    const now = Date.now();
-    if (now - lastTap < 300 && e.changedTouches.length === 1) {
-      if (scale === 1) {
-        scale = 2;
-      } else {
-        resetZoom();
-        lastTap = 0;
-        return;
-      }
-      updateZoom();
-    }
+  lastTap = now;
+}, { passive: false });
 
-    lastTap = now;
-  }, { passive: false });
+
+  
 
   container.addEventListener('touchcancel', () => {
     isDragging = false;
@@ -943,15 +960,25 @@ const audio = document.getElementById("bgm");
 const btn = document.getElementById("musicBtn");
 const icon = document.getElementById("musicIcon");
 
-btn.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-    icon.src = "icon/sound-high.svg";
-  } else {
-    audio.pause();
-    icon.src = "icon/sound-off.svg";
-  }
-});
+if (btn && audio) {
+  btn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      if (icon) {
+        icon.src = "icon/sound-high.svg";
+      } else {
+        btn.textContent = "🔊";
+      }
+    } else {
+      audio.pause();
+      if (icon) {
+        icon.src = "icon/sound-off.svg";
+      } else {
+        btn.textContent = "🔇";
+      }
+    }
+  });
+}
 
   async function init() {
     setMetaTags();
