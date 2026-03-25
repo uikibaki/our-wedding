@@ -310,6 +310,7 @@ a {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.7s ease;
+touch-action: none;
 }
 
 .photo-modal.is-open {
@@ -385,6 +386,10 @@ a {
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+  max-width: none;
+  max-height: none;
+  will-change: transform;
+  transform-origin: center center;
 }
 
 .photo-modal__counter {
