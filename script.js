@@ -745,16 +745,16 @@
      Init
      ═══════════════════════════════════════════ */
 
-const toggle = document.getElementById('bgmToggle');
-const bgm = document.getElementById('bgm');
+const audio = document.getElementById("bgm");
+const btn = document.getElementById("musicBtn");
 
-toggle.addEventListener('click', () => {
-  if (bgm.paused) {
-    bgm.play();
-    toggle.textContent = "🔊";
+btn.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+    btn.innerText = "🔊";
   } else {
-    bgm.pause();
-    toggle.textContent = "🔇";
+    audio.pause();
+    btn.innerText = "🔇";
   }
 });
   
