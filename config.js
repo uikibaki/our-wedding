@@ -42,7 +42,7 @@ const CONFIG = {
     address: "경기도 성남시 수정구 복정로76",
     tel: "031-721-6700",
     mapLinks: {
-      kakao: "https://place.map.kakao.com/706132423",
+      kakao: "https://kko.to/RKFNMZiHes",
       naver: "https://map.naver.com/p/entry/place/33575815?placePath=%252Fhome%253Fentry%253Dplt&searchType=place&lng=127.1282715&lat=37.4575233"
     }
   },
