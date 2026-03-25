@@ -381,8 +381,10 @@ a {
 }
 
 .photo-modal__img {
-  transform-origin: 0 0;
-  will-change: transform;
+  touch-action: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .photo-modal__counter {
