@@ -687,7 +687,7 @@ function initPhotoModal() {
     updateZoom();
   }, { passive: false });
 
-  container.addEventListener('touchstart', (e) => {
+  modal.addEventListener('touchstart', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
     if (e.touches.length >= 2 || scale > 1) {
@@ -714,7 +714,7 @@ function initPhotoModal() {
     }
   }, { passive: false });
 
-  container.addEventListener('touchmove', (e) => {
+  modal.addEventListener('touchmove', (e) => {
     if (!modal.classList.contains('is-open')) return;
 
     if (e.touches.length >= 2 || scale > 1) {
@@ -761,7 +761,7 @@ if (e.touches.length === 2) {
 
 
 
-container.addEventListener('touchend', (e) => {
+modal.addEventListener('touchend', (e) => {
   if (!modal.classList.contains('is-open')) return;
 
   img.classList.remove('dragging');
@@ -814,7 +814,7 @@ container.addEventListener('touchend', (e) => {
 
   
 
-container.addEventListener('touchcancel', () => {
+modal.addEventListener('touchcancel', () => {
   isDragging = false;
   initialPinchDistance = 0;
   initialScale = scale;
