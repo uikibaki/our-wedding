@@ -36,6 +36,58 @@
      Image Auto-Detection
      ═══════════════════════════════════════════ */
 
+const photoModal = document.getElementById("photoModal");
+const modalContainer = document.getElementById("modalContainer");
+const modalImg = document.getElementById("modalImg");
+
+let scale = 1;
+let startScale = 1;
+let translateX = 0;
+let translateY = 0;
+let startX = 0;
+let startY = 0;
+let isDragging = false;
+
+let pointers = new Map();
+let initialPinchDistance = 0;
+let initialScale = 1;
+
+/* 확대 상태 적용 */
+function updateZoom() {
+  modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+  if (scale > 1) {
+    modalImg.classList.add("is-zoomed");
+  } else {
+    modalImg.classList.remove("is-zoomed");
+    translateX = 0;
+    translateY = 0;
+    modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+  }
+}
+
+/* 줌 초기화 */
+function resetZoom() {
+  scale = 1;
+  startScale = 1;
+  translateX = 0;
+  translateY = 0;
+  isDragging = false;
+  pointers.clear();
+  initialPinchDistance = 0;
+  initialScale = 1;
+  modalImg.classList.remove("is-zoomed", "dragging");
+  modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+}
+
+/* 두 점 사이 거리 */
+function getDistance(p1, p2) {
+  const dx = p2.clientX - p1.clientX;
+  const dy = p2.clientY - p1.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+  
   function loadImagesFromFolder(folder, maxAttempts = 50) {
     return new Promise(resolve => {
         const images = [];
