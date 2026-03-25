@@ -591,6 +591,7 @@ function showModalImage() {
 function modalNavigate(dir) {
   const newIndex = modalIndex + dir;
   if (newIndex >= 0 && newIndex < modalImages.length) {
+    resetZoom();
     modalIndex = newIndex;
     showModalImage();
   }
@@ -740,13 +741,12 @@ if (e.touches.length === 2) {
   const currentDistance = getDistance(touch1, touch2);
 
   if (initialPinchDistance > 0) {
-    const prevScale = scale;
+    
+const prevScale = scale;
 
-    // 새 확대값
-    scale = initialScale * (currentDistance / initialPinchDistance);
-    scale = Math.min(Math.max(1, scale), 4);
+scale = initialScale * (currentDistance / initialPinchDistance);
+scale = Math.min(Math.max(1, scale), 4);
 
-    // 두 손가락 중심점
 const midX = (touch1.clientX + touch2.clientX) / 2;
 const midY = (touch1.clientY + touch2.clientY) / 2;
 
@@ -757,6 +757,13 @@ const pointY = midY - rect.top;
 const scaleRatio = scale / prevScale;
 translateX = pointX - (pointX - translateX) * scaleRatio;
 translateY = pointY - (pointY - translateY) * scaleRatio;
+
+// 축소해서 거의 원래 크기로 오면 위치도 같이 정리
+if (scale <= 1.02) {
+  scale = 1;
+  translateX = 0;
+  translateY = 0;
+}
 
 updateZoom();
 
