@@ -140,6 +140,8 @@
     namesEl.textContent = `${CONFIG.groom.name}  &  ${CONFIG.bride.name}`;
 
     btn.addEventListener('click', () => {
+      const bgm = document.getElementById('bgm');
+      bgm.play().catch(() => {});
       curtain.classList.add('is-open');
       document.body.classList.remove('no-scroll');
       setTimeout(() => {
