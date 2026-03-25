@@ -721,16 +721,36 @@ function initPhotoModal() {
       e.preventDefault();
     }
 
-    if (e.touches.length === 2) {
-      const currentDistance = getDistance(e.touches[0], e.touches[1]);
+if (e.touches.length === 2) {
+  const touch1 = e.touches[0];
+  const touch2 = e.touches[1];
+  const currentDistance = getDistance(touch1, touch2);
 
-      if (initialPinchDistance > 0) {
-        scale = initialScale * (currentDistance / initialPinchDistance);
-        scale = Math.min(Math.max(1, scale), 4);
-        updateZoom();
-      }
-      return;
-    }
+  if (initialPinchDistance > 0) {
+    const prevScale = scale;
+
+    // 새 확대값
+    scale = initialScale * (currentDistance / initialPinchDistance);
+    scale = Math.min(Math.max(1, scale), 4);
+
+    // 두 손가락 중심점
+    const midX = (touch1.clientX + touch2.clientX) / 2;
+    const midY = (touch1.clientY + touch2.clientY) / 2;
+
+    // 컨테이너 기준 좌표로 변환
+    const rect = container.getBoundingClientRect();
+    const pointX = midX - rect.left;
+    const pointY = midY - rect.top;
+
+    // 손가락 위치 기준으로 translate 보정
+    const scaleRatio = scale / prevScale;
+    translateX = pointX - (pointX - translateX) * scaleRatio;
+    translateY = pointY - (pointY - translateY) * scaleRatio;
+
+    updateZoom();
+  }
+  return;
+}
 
     if (e.touches.length === 1 && isDragging && scale > 1) {
       translateX = e.touches[0].clientX - dragStartX;
