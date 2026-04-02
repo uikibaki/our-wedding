@@ -184,11 +184,11 @@ function preventNativeGesture(e) {
 
     // Leaf color palette: green and golden tones
     const leafColors = [
-      { fill: 'rgba(139, 158, 126, 0.6)', stroke: 'rgba(74, 94, 59, 0.3)' },   // sage green
-      { fill: 'rgba(74, 94, 59, 0.5)', stroke: 'rgba(58, 75, 46, 0.3)' },       // forest green
-      { fill: 'rgba(168, 184, 158, 0.5)', stroke: 'rgba(139, 158, 126, 0.3)' },  // light sage
-      { fill: 'rgba(180, 165, 120, 0.5)', stroke: 'rgba(139, 115, 85, 0.3)' },   // golden
-      { fill: 'rgba(160, 175, 130, 0.5)', stroke: 'rgba(100, 120, 70, 0.3)' },   // yellow-green
+      { fill: 'rgba(77, 166, 255, 0.6)', stroke: 'rgba(30, 58, 138, 0.3)' },   // sky blue
+      { fill: 'rgba(30, 58, 138, 0.5)', stroke: 'rgba(15, 23, 42, 0.3)' },      // deep blue
+      { fill: 'rgba(217, 238, 255, 0.6)', stroke: 'rgba(77, 166, 255, 0.3)' },  // light sky
+      { fill: 'rgba(255, 255, 255, 0.5)', stroke: 'rgba(77, 166, 255, 0.2)' },  // white glow
+      { fill: 'rgba(147, 197, 253, 0.5)', stroke: 'rgba(30, 58, 138, 0.3)' },   // soft blue
     ];
 
     function resize() {
