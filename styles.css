@@ -24,32 +24,32 @@
 
 /* ─── CSS Variables ─── */
 :root {
-  --color-sage: #8B9E7E;
-  --color-sage-light: #a8b89e;
-  --color-sage-lighter: #c5d2bc;
-  --color-forest: #4A5E3B;
-  --color-forest-dark: #3a4b2e;
-  --color-cream: #F5F2E8;
-  --color-warm-white: #FAFAF5;
-  --color-brown: #8B7355;
-  --color-brown-light: #a89578;
+  --color-sage: #4DA6FF;
+  --color-sage-light: #7FC3FF;
+  --color-sage-lighter: #D9EEFF;
+  --color-forest: #1F2937;
+  --color-forest-dark: #111827;
+  --color-cream: #F9FAFB;
+  --color-warm-white: #FFFFFF;
+  --color-brown: #374151;
+  --color-brown-light: #6B7280;
 
   --color-bg: var(--color-warm-white);
   --color-bg-warm: var(--color-cream);
-  --color-bg-card: #ffffff;
-  --color-text: #3d3d32;
-  --color-text-light: #6b6b5e;
-  --color-text-muted: #9a9a8a;
+  --color-bg-card: #FFFFFF;
+  --color-text: #111111;
+  --color-text-light: #4B5563;
+  --color-text-muted: #9CA3AF;
   --color-accent: var(--color-sage);
   --color-accent-light: var(--color-sage-light);
   --color-accent-dark: var(--color-forest);
-  --color-border: #ddd8cc;
-  --color-divider: #ccc7b8;
-  --color-overlay: rgba(58, 64, 50, 0.6);
-  --color-kakao: #fee500;
-  --color-naver: #03c75a;
-  --color-white: #ffffff;
-  --color-toast-bg: rgba(74, 94, 59, 0.92);
+  --color-border: #E5E7EB;
+  --color-divider: #D1D5DB;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-kakao: #FEE500;
+  --color-naver: #03C75A;
+  --color-white: #FFFFFF;
+  --color-toast-bg: rgba(0, 0, 0, 0.85);
 
   --font-serif: 'Noto Serif KR', 'Georgia', serif;
   --font-sans: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
