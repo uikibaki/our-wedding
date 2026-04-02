@@ -180,9 +180,9 @@ a {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80px 120px at 30% 20%, rgba(139,158,126,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 60px 90px at 70% 60%, rgba(139,158,126,0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 100px 60px at 50% 85%, rgba(139,158,126,0.08) 0%, transparent 70%);
+    radial-gradient(ellipse 80px 120px at 30% 20%, rgba(77,166,255,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60px 90px at 70% 60%, rgba(77,166,255,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 100px 60px at 50% 85%, rgba(77,166,255,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
