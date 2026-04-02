@@ -481,9 +481,9 @@ touch-action: none;
     to bottom,
     transparent 0%,
     transparent 35%,
-    rgba(58, 75, 46, 0.2) 55%,
-    rgba(58, 75, 46, 0.55) 75%,
-    rgba(58, 75, 46, 0.85) 100%
+    rgba(15, 23, 42, 0.15) 55%,
+    rgba(15, 23, 42, 0.35) 75%,
+    rgba(15, 23, 42, 0.55) 100%
   );
   z-index: 1;
 }
