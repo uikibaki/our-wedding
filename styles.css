@@ -165,12 +165,12 @@ a {
 
 .curtain__left {
   left: 0;
-  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 40%, #4DA6FF 100%);
+  background: linear-gradient(135deg, #D9EEFF 0%, #A5D8FF 40%, #6FBFFF 100%);
 }
 
 .curtain__right {
   right: 0;
-  background: linear-gradient(225deg, #0F172A 0%, #1E3A8A 40%, #4DA6FF 100%);
+  background: linear-gradient(225deg, #D9EEFF 0%, #A5D8FF 40%, #6FBFFF 100%);
 }
 
 /* Botanical texture on curtain panels */
