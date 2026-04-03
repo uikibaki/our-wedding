@@ -480,10 +480,9 @@ touch-action: none;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 35%,
-    rgba(15, 23, 42, 0.15) 55%,
-    rgba(15, 23, 42, 0.35) 75%,
-    rgba(15, 23, 42, 0.55) 100%
+    transparent 50%,
+    rgba(217, 238, 255, 0.4) 75%,
+    rgba(217, 238, 255, 0.8) 100%
   );
   z-index: 1;
 }
